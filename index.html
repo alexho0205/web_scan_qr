@@ -1,0 +1,56 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <div>
+        <button id="scanBtn" onclick="scan()"> scan </button>
+        <button id="resetBtn" onclick="reset()"> reset </button>
+    </div>
+    <div>
+        <video id="video" width="300" height="200" style="border: 1px solid gray;background-color:gainsboro;"></video>
+    </div>
+
+
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+    <script type="text/javascript">
+
+        function scan() {
+            decodeOnce(codeReader, selectedDeviceId);
+
+        }
+
+        function reset() {
+            codeReader.reset();
+        }
+
+        function decodeOnce(codeReader, selectedDeviceId) {
+            codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+                console.log(result);
+                alert(result.text);
+                //document.getElementById('result').textContent = result.text
+            }).catch((err) => {
+                console.error(err)
+                document.getElementById('result').textContent = err
+            })
+        }
+
+        var codeReader;
+        var selectedDeviceId;
+        window.addEventListener('load', function () {
+  
+            codeReader = new ZXing.BrowserQRCodeReader();
+            console.log('ZXing code reader 初始化');
+
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
